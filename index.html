@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperatura</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white w-full max-w-md p-8 rounded-2xl shadow-lg">
+
+        <h1 class="text-3xl font-bold text-center text-slate-800 mb-2">
+            🌡️ Temperatura
+        </h1>
+
+        <p class="text-center text-slate-500 mb-6">
+            Consulta cómo está el clima.
+        </p>
+
+        <label class="block text-slate-700 font-semibold mb-2">
+            Ingresa la temperatura (°C)
+        </label>
+
+        <input
+            type="number"
+            id="temperature"
+            placeholder="Ejemplo: 30"
+            class="w-full border border-slate-300 rounded-xl p-3 outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+        >
+
+        <button
+            id="checkButton"
+            class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
+        >
+            Consultar temperatura
+        </button>
+
+        <div
+            id="result"
+            class="hidden mt-6 p-5 rounded-xl text-center"
+        >
+            <h2 id="degrees" class="text-3xl font-bold mb-2"></h2>
+
+            <p id="message" class="text-xl font-semibold"></p>
+
+            <p id="description" class="text-sm mt-2"></p>
+        </div>
+
+    </div>
+
+    <script>
+
+        const input = document.getElementById("temperature");
+        const button = document.getElementById("checkButton");
+
+        const result = document.getElementById("result");
+        const degrees = document.getElementById("degrees");
+        const message = document.getElementById("message");
+        const description = document.getElementById("description");
+
+        button.addEventListener("click", function() {
+
+            const temperature = input.value.trim();
+
+            if (temperature === "") {
+                alert("Por favor, ingresa una temperatura.");
+                return;
+            }
+
+            const temp = Number(temperature);
+
+            if (!Number.isFinite(temp) || temp < -273.15) {
+                alert("Ingresa una temperatura válida.");
+                return;
+            }
+
+            result.classList.remove(
+                "hidden",
+                "bg-blue-100",
+                "bg-green-100",
+                "bg-orange-100"
+            );
+
+            degrees.textContent = temp + " °C";
+
+            if (temp < 15) {
+
+                message.textContent = "❄️ Hace frío";
+                description.textContent = "Te recomendamos usar ropa abrigada.";
+
+                result.classList.add("bg-blue-100");
+
+            } else if (temp <= 28) {
+
+                message.textContent = "🌤️ Clima agradable";
+                description.textContent = "La temperatura está bastante bien.";
+
+                result.classList.add("bg-green-100");
+
+            } else {
+
+                message.textContent = "☀️ Hace calor";
+                description.textContent = "Mantente hidratado y busca sombra.";
+
+                result.classList.add("bg-orange-100");
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
